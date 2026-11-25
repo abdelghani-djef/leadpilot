@@ -1,0 +1,6 @@
+# SITE_ADDRESS comes from .env, e.g. leadpilot.example.com or leadpilot.35-180-91-97.sslip.io.
+# Caddy requests and renews the HTTPS certificate on its own; ports 80 and 443 must be open.
+{$SITE_ADDRESS} {
+	encode zstd gzip
+	reverse_proxy leadpilot:3000
+}

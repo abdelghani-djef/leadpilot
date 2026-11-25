@@ -2,6 +2,8 @@
 
 **AI lead qualification for small businesses.** LeadPilot reads every inquiry from a website form, scores it hot, warm or cold, summarizes it, and drafts a reply in the customer's own language (English, French or Arabic). Each lead is then pushed to n8n, Google Sheets, Make or a CRM through a signed webhook.
 
+**Live demo: [leadpilot.35-180-91-97.sslip.io](https://leadpilot.35-180-91-97.sslip.io)**
+
 It's a working demo of the automation work I build for clients: a real AI integration, a clean dashboard, and the plumbing that connects it to the tools a business already uses.
 
 ## What it does
@@ -113,7 +115,9 @@ const valid = timingSafeEqual(Buffer.from(expected), Buffer.from(signatureHeader
 
 ## Deploy to a VPS
 
-On a server with Docker:
+For a small server (512 MB or less), build the image on your computer and upload it: see [deploy/README.md](deploy/README.md). The live demo runs this way, behind Caddy.
+
+On a server with enough memory to build, Docker alone is enough:
 
 ```bash
 cp .env.example .env   # set GROQ_API_KEY and ADMIN_PASSWORD at least
