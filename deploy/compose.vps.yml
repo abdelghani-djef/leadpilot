@@ -1,6 +1,7 @@
-# Production stack for a small VPS: LeadPilot behind Caddy, which gets HTTPS certificates itself.
+# LeadPilot on a small VPS, behind a shared Caddy gateway on the "web" network, which handles
+# HTTPS for every app on the server. See deploy/README.md.
 # The image is built on another machine and loaded with `docker load`, so the VPS never builds
-# (a Next.js build needs more memory than a 512 MB server has). See deploy/README.md.
+# (a Next.js build needs more memory than a 512 MB server has).
 services:
   leadpilot:
     image: leadpilot:latest
@@ -8,25 +9,13 @@ services:
     env_file: .env
     volumes:
       - leadpilot-data:/app/data
+    networks:
+      - web
     mem_limit: 300m
 
-  caddy:
-    image: caddy:2-alpine
-    restart: unless-stopped
-    ports:
-      - "80:80"
-      - "443:443"
-    environment:
-      SITE_ADDRESS: ${SITE_ADDRESS}
-    volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile:ro
-      - caddy-data:/data
-      - caddy-config:/config
-    depends_on:
-      - leadpilot
-    mem_limit: 100m
+networks:
+  web:
+    external: true
 
 volumes:
   leadpilot-data:
-  caddy-data:
-  caddy-config:
